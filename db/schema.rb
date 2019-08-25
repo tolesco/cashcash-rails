@@ -81,18 +81,6 @@ ActiveRecord::Schema.define(version: 2019_08_25_160827) do
     t.index ["category_id"], name: "index_money_transactions_on_category_id"
   end
 
-  create_table "reconciliations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.decimal "past_balance"
-    t.decimal "new_balance"
-    t.decimal "amount"
-    t.text "notes"
-    t.jsonb "data"
-    t.uuid "account_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_reconciliations_on_account_id"
-  end
-
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -114,5 +102,4 @@ ActiveRecord::Schema.define(version: 2019_08_25_160827) do
   add_foreign_key "categories", "users"
   add_foreign_key "money_transactions", "accounts"
   add_foreign_key "money_transactions", "categories"
-  add_foreign_key "reconciliations", "accounts"
 end

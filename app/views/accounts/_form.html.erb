@@ -24,10 +24,8 @@
   <% if controller.action_name == 'edit' %>
     <div class="field">
       <%= form.label :current_balance %>
-      <%= form.text_field :current_balance, disabled: true %>
-    </div>
-    <div class="field">
-      <%= link_to 'View account reconciliations', account_reconciliations_path(account) %>
+      <%= form.text_field :current_balance, disabled: true %><br>
+      <small><%= link_to 'Create a reconciliation transaction', new_money_transaction_path %> with the appropriate amount if you need adjust the account balance.</small>
     </div>
   <% end %>
 
