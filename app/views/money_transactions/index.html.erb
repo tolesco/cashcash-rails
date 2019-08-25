@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Money Transactions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Done at</th>
+      <th>Kind</th>
+      <th>Amount</th>
+      <th>Notes</th>
+      <th>Cfdi folio</th>
+      <th>Cfdi issued by</th>
+      <th>Cfdi issued rfc</th>
+      <th>Cfdi payment method</th>
+      <th>Data</th>
+      <th>Account</th>
+      <th>Category</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @money_transactions.each do |money_transaction| %>
+      <tr>
+        <td><%= money_transaction.description %></td>
+        <td><%= money_transaction.done_at %></td>
+        <td><%= money_transaction.kind %></td>
+        <td><%= money_transaction.amount %></td>
+        <td><%= money_transaction.notes %></td>
+        <td><%= money_transaction.cfdi_folio %></td>
+        <td><%= money_transaction.cfdi_issued_by %></td>
+        <td><%= money_transaction.cfdi_issued_rfc %></td>
+        <td><%= money_transaction.cfdi_payment_method %></td>
+        <td><%= money_transaction.data %></td>
+        <td><%= money_transaction.account.name %></td>
+        <td><%= money_transaction.category.name %></td>
+        <td><%= link_to 'Edit', edit_money_transaction_path(money_transaction) %></td>
+        <td><%= link_to 'Destroy', money_transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Money Transaction', new_money_transaction_path %>

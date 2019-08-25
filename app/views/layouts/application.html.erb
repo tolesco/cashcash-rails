@@ -13,8 +13,10 @@
     <%= render 'shared/flash_messages' %>
     <ul>
       <% if user_signed_in? %>
+        <li><a href="#">Dashboard</a></li>
+        <li><%= link_to 'Transactions', money_transactions_path %></li>
         <li><%= link_to 'Accounts', accounts_path %></li>
-        <li><%= link_to 'Categories', user_categories_path(current_user) %></li>
+        <li><%= link_to 'Categories', categories_path %></li>
         <li><%= link_to 'My profile', edit_user_registration_path %></li>
         <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
       <% else %>

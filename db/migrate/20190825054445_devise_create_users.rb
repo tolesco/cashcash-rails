@@ -34,7 +34,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
 
       ## Sistema de Administración Tributaria (SAT) fields to process CFDI/XML (Mexico only)
       t.string :sat_name,   null: false
-      t.string :sat_rfc,    null: false, unique: true
+      t.string :sat_rfc,    null: false
 
       ## Additional fields
       t.jsonb  :data
@@ -44,6 +44,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
 
     add_index :users, :email,                unique: true
     add_index :users, :reset_password_token, unique: true
+    add_index :users, :sat_rfc,              unique: true
     # add_index :users, :confirmation_token,   unique: true
     # add_index :users, :unlock_token,         unique: true
   end

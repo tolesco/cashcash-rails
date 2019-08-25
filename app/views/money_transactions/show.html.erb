@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @money_transaction.description %>
+</p>
+
+<p>
+  <strong>Done at:</strong>
+  <%= @money_transaction.done_at %>
+</p>
+
+<p>
+  <strong>Kind:</strong>
+  <%= @money_transaction.kind %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @money_transaction.amount %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @money_transaction.notes %>
+</p>
+
+<p>
+  <strong>Cfdi folio:</strong>
+  <%= @money_transaction.cfdi_folio %>
+</p>
+
+<p>
+  <strong>Cfdi issued by:</strong>
+  <%= @money_transaction.cfdi_issued_by %>
+</p>
+
+<p>
+  <strong>Cfdi issued rfc:</strong>
+  <%= @money_transaction.cfdi_issued_rfc %>
+</p>
+
+<p>
+  <strong>Cfdi payment method:</strong>
+  <%= @money_transaction.cfdi_payment_method %>
+</p>
+
+<p>
+  <strong>Data:</strong>
+  <%= @money_transaction.data %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @money_transaction.account %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @money_transaction.category %>
+</p>
+
+<%= link_to 'Edit', edit_money_transaction_path(@money_transaction) %> |
+<%= link_to 'Back', money_transactions_path %>

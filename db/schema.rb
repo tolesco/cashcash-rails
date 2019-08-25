@@ -10,17 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_25_103430) do
+ActiveRecord::Schema.define(version: 2019_08_25_160827) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "kind"
-    t.string "name"
-    t.decimal "initial_balance"
-    t.decimal "current_balance"
+    t.integer "kind", null: false
+    t.string "name", default: "", null: false
+    t.decimal "current_balance", default: "0.0", null: false
     t.text "description"
     t.jsonb "data"
     t.uuid "user_id"
@@ -63,6 +62,25 @@ ActiveRecord::Schema.define(version: 2019_08_25_103430) do
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
+  create_table "money_transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "description"
+    t.date "done_at"
+    t.integer "kind"
+    t.decimal "amount"
+    t.text "notes"
+    t.string "cfdi_folio"
+    t.string "cfdi_issued_by"
+    t.string "cfdi_issued_rfc"
+    t.string "cfdi_payment_method"
+    t.jsonb "data"
+    t.uuid "account_id"
+    t.uuid "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_money_transactions_on_account_id"
+    t.index ["category_id"], name: "index_money_transactions_on_category_id"
+  end
+
   create_table "reconciliations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.decimal "past_balance"
     t.decimal "new_balance"
@@ -88,10 +106,13 @@ ActiveRecord::Schema.define(version: 2019_08_25_103430) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["sat_rfc"], name: "index_users_on_sat_rfc", unique: true
   end
 
   add_foreign_key "accounts", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "categories", "users"
+  add_foreign_key "money_transactions", "accounts"
+  add_foreign_key "money_transactions", "categories"
   add_foreign_key "reconciliations", "accounts"
 end

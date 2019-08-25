@@ -21,17 +21,11 @@
     <%= form.text_field :name %>
   </div>
 
-  <div class="field">
-    <%= form.label :initial_balance %>
-    <%= form.text_field :initial_balance, disabled: controller.action_name == 'new' ? false : true %>
-  </div>
-
-  <div class="field">
-    <%= form.label :current_balance %>
-    <%= form.text_field :current_balance, disabled: controller.action_name == 'new' ? true : false %>
-  </div>
-
   <% if controller.action_name == 'edit' %>
+    <div class="field">
+      <%= form.label :current_balance %>
+      <%= form.text_field :current_balance, disabled: true %>
+    </div>
     <div class="field">
       <%= link_to 'View account reconciliations', account_reconciliations_path(account) %>
     </div>

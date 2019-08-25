@@ -3,10 +3,11 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  validates :sat_name, :sat_rfc, presence: true
   before_create :upcase_extra_params
   has_many :accounts, dependent: :destroy
   has_many :categories, dependent: :destroy
+  validates :sat_name, :sat_rfc, presence: true
+  validates_uniqueness_of :sat_rfc, case_sensitive: false
 
   private
 

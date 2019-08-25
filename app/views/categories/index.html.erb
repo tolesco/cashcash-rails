@@ -21,9 +21,9 @@
         <td><%= category.name %></td>
         <td><%= category.description %></td>
         <td><%= category.data %></td>
-        <td><%= category.user %></td>
-        <td><%= link_to 'Edit', edit_user_category_path(@user, category) %></td>
-        <td><%= link_to 'Destroy', [@user, category], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= category.user.id %></td>
+        <td><%= link_to 'Edit', edit_category_path(category) %></td>
+        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -31,4 +31,4 @@
 
 <br>
 
-<%= link_to 'New Category', new_user_category_path %>
+<%= link_to 'New Category', new_category_path %>
