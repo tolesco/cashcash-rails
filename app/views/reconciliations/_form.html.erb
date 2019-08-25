@@ -1,0 +1,33 @@
+<%= form_with(model: [@account, reconciliation], local: true) do |form| %>
+  <% if @reconciliation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(reconciliation.errors.count, "error") %> prohibited this reconciliation from being saved:</h2>
+
+      <ul>
+      <% @reconciliation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :past_balance %>
+    <%= form.text_field :past_balance, value: @account.current_balance, disabled: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :new_balance %>
+    <%= form.text_field :new_balance %>
+  </div>
+
+  <div class="field">
+    <%= form.label :notes %>
+    <%= form.text_area :notes %>
+  </div>
+
+  <div class="actions">
+    <%= form.hidden_field :account_id %>
+    <%= form.submit %>
+  </div>
+<% end %>

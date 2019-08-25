@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :accounts
+  resources :accounts do
+    resources :reconciliations, only: [:index, :new, :create]
+  end
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations',

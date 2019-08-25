@@ -29,10 +29,10 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.save
         format.html { redirect_to @account, notice: 'Account was successfully created.' }
-        format.json { render :show, status: :created, location: @account }
+        # format.json { render :show, status: :created, location: @account }
       else
         format.html { render :new }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
+        # format.json { render json: @account.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -43,10 +43,10 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.update(account_params)
         format.html { redirect_to @account, notice: 'Account was successfully updated.' }
-        format.json { render :show, status: :ok, location: @account }
+        # format.json { render :show, status: :ok, location: @account }
       else
         format.html { render :edit }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
+        # format.json { render json: @account.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -57,7 +57,7 @@ class AccountsController < ApplicationController
     @account.discard
     respond_to do |format|
       format.html { redirect_to accounts_url, notice: 'Account removed.' }
-      format.json { head :no_content }
+      # format.json { head :no_content }
     end
   end
 

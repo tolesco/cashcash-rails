@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Past balance:</strong>
+  <%= @reconciliation.past_balance %>
+</p>
+
+<p>
+  <strong>New balance:</strong>
+  <%= @reconciliation.new_balance %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @reconciliation.amount %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @reconciliation.notes %>
+</p>
+
+<p>
+  <strong>Data:</strong>
+  <%= @reconciliation.data %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @reconciliation.account %>
+</p>
+
+<%= link_to 'Edit', edit_reconciliation_path(@reconciliation) %> |
+<%= link_to 'Back', reconciliations_path %>
