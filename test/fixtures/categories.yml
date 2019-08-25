@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  associated_transaction_type: 1
+  name: MyString
+  description: MyText
+  data: 
+  user: one
+
+two:
+  associated_transaction_type: 1
+  name: MyString
+  description: MyText
+  data: 
+  user: two

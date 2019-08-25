@@ -31,6 +31,16 @@
     <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
 
+  <div class="field">
+    <%= f.label :sat_name %>
+    <%= f.text_field :sat_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :sat_rfc %>
+    <%= f.text_field :sat_rfc %>
+  </div>
+
   <div class="actions">
     <%= f.submit "Update" %>
   </div>

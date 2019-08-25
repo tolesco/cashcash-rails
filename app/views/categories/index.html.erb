@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Categories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Associated transaction type</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Data</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= category.associated_transaction_type %></td>
+        <td><%= category.name %></td>
+        <td><%= category.description %></td>
+        <td><%= category.data %></td>
+        <td><%= category.user %></td>
+        <td><%= link_to 'Edit', edit_user_category_path(@user, category) %></td>
+        <td><%= link_to 'Destroy', [@user, category], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Category', new_user_category_path %>

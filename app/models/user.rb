@@ -6,6 +6,7 @@ class User < ApplicationRecord
   validates :sat_name, :sat_rfc, presence: true
   before_create :upcase_extra_params
   has_many :accounts, dependent: :destroy
+  has_many :categories, dependent: :destroy
 
   private
 
