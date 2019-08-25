@@ -1,24 +1,9 @@
-# README
+# cashcash-rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+**cashcash-rails** is a self hosted app for personal finance and money management. Developed in Ruby on Rails 5.2.3 and released under the MIT license.
 
-Things you may want to cover:
+## Restrictions
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* cashcash-rails is designed as a single user system. Multiple users are not allowed.
+* Account types are statically defined as an enum in the Account class.
+* User can't recovery or trash an archived account.

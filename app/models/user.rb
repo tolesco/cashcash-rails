@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   validates :sat_name, :sat_rfc, presence: true
   before_create :upcase_extra_params
+  has_many :accounts, dependent: :destroy
 
   private
 
