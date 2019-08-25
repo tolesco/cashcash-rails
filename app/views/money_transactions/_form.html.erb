@@ -32,6 +32,17 @@
   </div>
 
   <div class="field">
+    <%= form.label :invoice %>
+    <% if money_transaction.invoice.attached? %>
+      <div class="field">
+        <%= link_to money_transaction.invoice.filename, rails_blob_path(money_transaction.invoice, disposition: 'attachment') %>
+        <%= link_to '[X]', attachment_path(money_transaction.invoice.id), method: :delete, data: {confirm: 'Are you sure? This action cannot undo'} %>
+      </div>
+    <% end %>
+    <%= form.file_field :invoice, direct_upload: true %>
+  </div>  
+
+  <div class="field">
     <%= form.label :notes %>
     <%= form.text_area :notes %>
   </div>
@@ -55,6 +66,28 @@
     <%= form.label :cfdi_payment_method %>
     <%= form.text_field :cfdi_payment_method %>
   </div>
+
+  <div class="field">
+    <%= form.label :cfdi_pdf %>
+    <% if money_transaction.cfdi_pdf.attached? %>
+      <div class="field">
+        <%= link_to money_transaction.cfdi_pdf.filename, rails_blob_path(money_transaction.cfdi_pdf, disposition: 'attachment') %>
+        <%= link_to '[X]', attachment_path(money_transaction.cfdi_pdf.id), method: :delete, data: {confirm: 'Are you sure? This action cannot undo'} %>
+      </div>
+    <% end %>    
+    <%= form.file_field :cfdi_pdf, direct_upload: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cfdi_xml %>
+    <% if money_transaction.cfdi_xml.attached? %>
+      <div class="field">
+        <%= link_to money_transaction.cfdi_xml.filename, rails_blob_path(money_transaction.cfdi_xml, disposition: 'attachment') %>
+        <%= link_to '[X]', attachment_path(money_transaction.cfdi_xml.id), method: :delete, data: {confirm: 'Are you sure? This action cannot undo'} %>
+      </div>
+    <% end %>    
+    <%= form.file_field :cfdi_xml, direct_upload: true %>
+  </div>    
 
   <div class="field">
     <%= form.label :data %>
