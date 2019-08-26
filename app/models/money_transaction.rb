@@ -6,6 +6,7 @@ class MoneyTransaction < ApplicationRecord
   has_one_attached :cfdi_xml
   enum kind: [:deposit, :withdrawal]
   after_commit :update_account_balance, on: [:create, :update, :destroy]
+  validates_presence_of :amount, :kind
 
   def update_account_balance
     new_account_balance = 0.0

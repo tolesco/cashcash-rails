@@ -11,100 +11,118 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
 
-  <div class="field">
-    <%= form.label :done_at %>
-    <%= form.date_select :done_at %>
-  </div>
 
-  <div class="field">
-    <%= form.label :kind %>
-    <%= form.select :kind, options_for_select(MoneyTransaction.kinds.map{ |mt| [mt[0].humanize, mt[0]]}) %>
-  </div>
-
-  <div class="field">
-    <%= form.label :amount %>
-    <%= form.text_field :amount %>
-  </div>
-
-  <div class="field">
-    <%= form.label :invoice %>
-    <% if money_transaction.invoice.attached? %>
-      <div class="field">
-        <%= link_to money_transaction.invoice.filename, rails_blob_path(money_transaction.invoice, disposition: 'attachment') %>
-        <%= link_to '[X]', attachment_path(money_transaction.invoice.id), method: :delete, data: {confirm: 'Are you sure? This action cannot undo'} %>
-      </div>
-    <% end %>
-    <%= form.file_field :invoice, direct_upload: true %>
-  </div>  
-
-  <div class="field">
-    <%= form.label :notes %>
-    <%= form.text_area :notes %>
-  </div>
-
-  <div class="field">
-    <%= form.label :cfdi_folio %>
-    <%= form.text_field :cfdi_folio %>
-  </div>
-
-  <div class="field">
-    <%= form.label :cfdi_issued_by %>
-    <%= form.text_field :cfdi_issued_by %>
-  </div>
-
-  <div class="field">
-    <%= form.label :cfdi_issued_rfc %>
-    <%= form.text_field :cfdi_issued_rfc %>
-  </div>
-
-  <div class="field">
-    <%= form.label :cfdi_payment_method %>
-    <%= form.text_field :cfdi_payment_method %>
-  </div>
-
-  <div class="field">
-    <%= form.label :cfdi_pdf %>
-    <% if money_transaction.cfdi_pdf.attached? %>
-      <div class="field">
-        <%= link_to money_transaction.cfdi_pdf.filename, rails_blob_path(money_transaction.cfdi_pdf, disposition: 'attachment') %>
-        <%= link_to '[X]', attachment_path(money_transaction.cfdi_pdf.id), method: :delete, data: {confirm: 'Are you sure? This action cannot undo'} %>
-      </div>
-    <% end %>    
-    <%= form.file_field :cfdi_pdf, direct_upload: true %>
-  </div>
-
-  <div class="field">
-    <%= form.label :cfdi_xml %>
-    <% if money_transaction.cfdi_xml.attached? %>
-      <div class="field">
-        <%= link_to money_transaction.cfdi_xml.filename, rails_blob_path(money_transaction.cfdi_xml, disposition: 'attachment') %>
-        <%= link_to '[X]', attachment_path(money_transaction.cfdi_xml.id), method: :delete, data: {confirm: 'Are you sure? This action cannot undo'} %>
-      </div>
-    <% end %>    
-    <%= form.file_field :cfdi_xml, direct_upload: true %>
-  </div>    
-
-  <div class="field">
-    <%= form.label :data %>
-    <%= form.text_field :data %>
-  </div>
-
-  <div class="field">
-    <%= form.label :account_id %>
-    <%= form.select :account_id, options_for_select(current_user.accounts.kept.map{ |a| [a.name, a.id] }) %>
-  </div>
-
-  <div class="field">
-    <%= form.label :category_id %>
-    <%= form.select :category_id, options_for_select(current_user.categories.map{ |c| [c.name, c.id] }) %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+        <div class="card">
+          <div class="card-body">
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-transaction-tab" data-toggle="tab" href="#nav-transaction" role="tab" aria-controls="nav-transaction" aria-selected="true">Transaction details</a>
+                <a class="nav-item nav-link" id="nav-sat-tab" data-toggle="tab" href="#nav-sat" role="tab" aria-controls="nav-sat" aria-selected="false">SAT (Mexico only)</a>
+              </div>
+            </nav>
+            <div class="tab-content mt-3" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-transaction" role="tabpanel" aria-labelledby="nav-transaction-tab">
+                <div class="form-group">
+                  <%= form.label :description %>
+                  <%= form.text_area :description, class: 'form-control' %>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <%= form.label :account_id, 'Account' %>
+                    <%= form.select :account_id, 
+                        options_for_select(current_user.accounts.kept.map{ |a| [a.name, a.id] }, money_transaction.account), 
+                        {}, 
+                        class: 'custom-select' %>
+                  </div>                
+                  <div class="form-group col">
+                    <%= form.label :done_at, 'Date' %>
+                    <%# form.date_select :done_at %>
+                    <%= form.text_field :done_at, class: 'form-control' %>
+                  </div>                  
+                </div>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <%= form.label :kind, 'Deposit or Withdrawal' %>
+                    <%= form.select :kind, options_for_select(MoneyTransaction.kinds.map{ |mt| [mt[0].humanize, mt[0]]}, money_transaction.kind), {}, class: 'custom-select' %>
+                  </div>                
+                  <div class="form-group col">
+                    <%= form.label :amount, 'Total Amount' %>
+                    <%= form.number_field :amount, class: 'form-control' %>
+                  </div>                  
+                </div>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <%= form.label :category_id, 'Category' %>
+                    <%= form.select :category_id, options_for_select(current_user.categories.map{ |c| [c.name, c.id] }, money_transaction.category), {}, class: 'custom-select' %>
+                  </div>                
+                  <div class="form-group col">
+                    <%= form.label :invoice %><br>
+                    <% if money_transaction.invoice.attached? %>
+                      <div class="form-group">
+                        <%= link_to money_transaction.invoice.filename, rails_blob_path(money_transaction.invoice, disposition: 'attachment'), class: 'btn btn-link' %>
+                          <%= link_to "<i class='fas fa-trash'></i>".html_safe, attachment_path(money_transaction.invoice.id), method: :delete, class: 'btn btn-sm btn-danger', data: {confirm: 'Are you sure? This action cannot undo'} %>
+                      </div>
+                    <% end %>
+                    <%= form.file_field :invoice, direct_upload: true %>
+                  </div>                  
+                </div>
+                <div class="form-group">
+                  <%= form.label :notes %>
+                  <%= form.text_area :notes, class: 'form-control' %>
+                </div>                                                
+              </div>
+              <div class="tab-pane fade" id="nav-sat" role="tabpanel" aria-labelledby="nav-sat-tab">
+                <div class="form-group">
+                  <%= form.label :cfdi_folio, 'Folio' %>
+                  <%= form.text_field :cfdi_folio, class: 'form-control' %>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <%= form.label :cfdi_issued_by, 'Issued By' %>
+                    <%= form.text_field :cfdi_issued_by, class: 'form-control' %>
+                  </div>
+                  <div class="form-group col">
+                    <%= form.label :cfdi_issued_rfc, 'Issued RFC' %>
+                    <%= form.text_field :cfdi_issued_rfc, class: 'form-control' %>
+                  </div>                                  
+                </div>
+                <div class="form-group">
+                  <%= form.label :cfdi_payment_method, 'Payment Method' %>
+                  <%= form.text_field :cfdi_payment_method, class: 'form-control' %>                  
+                </div>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <%= form.label :cfdi_pdf, 'PDF Invoice' %><br>
+                      <% if money_transaction.cfdi_pdf.attached? %>
+                        <div class="field">
+                          <%= link_to money_transaction.cfdi_pdf.filename, rails_blob_path(money_transaction.cfdi_pdf, disposition: 'attachment'), class: 'btn btn-link' %>
+                          <%= link_to "<i class='fas fa-trash'></i>".html_safe, attachment_path(money_transaction.cfdi_pdf.id), method: :delete, class: 'btn btn-sm btn-danger', data: {confirm: 'Are you sure? This action cannot undo'} %>
+                        </div>
+                      <% end %>    
+                    <%= form.file_field :cfdi_pdf, direct_upload: true %>
+                  </div>
+                  <div class="form-group col">
+                    <%= form.label :cfdi_xml, 'XML Invoice' %><br>
+                      <% if money_transaction.cfdi_xml.attached? %>
+                        <div class="field">
+                          <%= link_to money_transaction.cfdi_xml.filename, rails_blob_path(money_transaction.cfdi_xml, disposition: 'attachment'), class: 'btn btn-link' %>
+                          <%= link_to "<i class='fas fa-trash'></i>".html_safe, attachment_path(money_transaction.cfdi_xml.id), method: :delete, class: 'btn btn-sm btn-danger', data: {confirm: 'Are you sure? This action cannot undo'} %>
+                        </div>
+                      <% end %>    
+                    <%= form.file_field :cfdi_xml, direct_upload: true %>
+                  </div>                  
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer text-right">
+            <% if money_transaction.persisted? %>
+              <%= link_to "<i class='fas fa-trash'></i>".html_safe, money_transaction, method: :delete, class: 'btn btn-danger', data:{ confirm: 'Transaction will be deleted. This action cannot be undo.'} %>
+              <!-- <a href="#" class="btn btn-secondary"><i class="fas fa-copy"></i></a> -->
+            <% end %>
+            <%= form.submit "Save", class: 'btn btn-primary' %>
+            <%= link_to 'Cancel', :back %>
+          </div>
+        </div>
 <% end %>

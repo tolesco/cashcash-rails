@@ -3,8 +3,8 @@ class CreateMoneyTransactions < ActiveRecord::Migration[5.2]
     create_table :money_transactions, id: :uuid do |t|
       t.text :description
       t.date :done_at
-      t.integer :kind
-      t.decimal :amount
+      t.integer :kind, null: false
+      t.decimal :amount, null: false
       t.text :notes
       t.string :cfdi_folio
       t.string :cfdi_issued_by
