@@ -1,48 +1,178 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Money Transactions</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Description</th>
-      <th>Done at</th>
-      <th>Kind</th>
-      <th>Amount</th>
-      <th>Notes</th>
-      <th>Cfdi folio</th>
-      <th>Cfdi issued by</th>
-      <th>Cfdi issued rfc</th>
-      <th>Cfdi payment method</th>
-      <th>Data</th>
-      <th>Account</th>
-      <th>Category</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @money_transactions.each do |money_transaction| %>
-      <tr>
-        <td><%= money_transaction.description %></td>
-        <td><%= money_transaction.done_at %></td>
-        <td><%= money_transaction.kind %></td>
-        <td><%= money_transaction.amount %></td>
-        <td><%= money_transaction.notes %></td>
-        <td><%= money_transaction.cfdi_folio %></td>
-        <td><%= money_transaction.cfdi_issued_by %></td>
-        <td><%= money_transaction.cfdi_issued_rfc %></td>
-        <td><%= money_transaction.cfdi_payment_method %></td>
-        <td><%= money_transaction.data %></td>
-        <td><%= money_transaction.account.name %></td>
-        <td><%= money_transaction.category.name %></td>
-        <td><%= link_to 'Edit', edit_money_transaction_path(money_transaction) %></td>
-        <td><%= link_to 'Destroy', money_transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Money Transaction', new_money_transaction_path %>
+        <h1 class="text-brand-primary">Transactions</h1>
+        <p class="text-sm">Lorem ipsum dolor sit amet...</p>
+        <a href="#" class="btn btn-primary">New transaction</a>
+        <nav class="navbar navbar-light bg-light mt-3 mb-3">
+          <form class="form-inline">
+            <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Search by description..." aria-label="Search">
+            <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+          </form>
+          <form class="form-inline">
+            <select class="custom-select custom-select-sm mr-sm-2">
+              <option>All accounts</option>
+              <option>Cash on hand</option>
+              <option>Santander debit XXXX</option>
+              <option>Santander credit XXXX</option>
+            </select>
+            <select class="custom-select custom-select-sm mr-sm-2">
+              <option>All categories</option>
+              <option>Sales</option>
+              <option>Transportation</option>
+              <option>Rent</option>
+              <option>Payroll</option>
+              <option>Home & Maintenance</option>
+            </select>
+            <input class="form-control form-control-sm mr-sm-2" type="text" placeholder="Select date range..." aria-label="date-range">
+            <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-filter"></i></button>
+          </form>          
+        </nav>
+        <p>
+          <span class="text-sm text-gray">Transactions from <strong>2019/05/01</strong> to <strong>2019/08/15</strong> in <strong>All accounts</strong> / <strong>All categories</strong></span>
+          <span>
+            <a href="#" class="btn btn-sm btn-link">Export to CSV</a>
+            <a href="#" class="btn btn-sm btn-link">Export to PDF</a>
+          </span>          
+        </p>
+        <table id="myTable" class="table table-sm">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Category</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2019/08/21</td>
+              <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod..</td>
+              <td><span class="text-success">$550.00</span></td>
+              <td>Uncategorized income</td>
+              <td><a href="#"><i class="fas fa-edit"></i></a></td>
+            </tr>
+            <tr>
+              <td>2019/11/15</td>
+              <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod..</td>
+              <td><span class="text-success">$420.00</span></td>
+              <td>Uncategorized income</td>
+              <td><a href="#"><i class="fas fa-edit"></i></a></td>
+            </tr>
+            <tr>
+              <td>2019/11/20</td>
+              <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod..</td>
+              <td>$420.00</td>
+              <td>Uncategorized expense</td>
+              <td><a href="#"><i class="fas fa-edit"></i></a></td>
+            </tr>            
+          </tbody>
+        </table>
+        <nav class="nav justify-content-center">
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-left"></i> Prev</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next <i class="fas fa-angle-right"></i></a></li>
+          </ul>
+        </nav>
+        <h5 class="text-brand-secondary">Transaction Form</h5>
+        <form>
+        <div class="card">
+          <div class="card-body">
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-transaction-tab" data-toggle="tab" href="#nav-transaction" role="tab" aria-controls="nav-transaction" aria-selected="true">Transaction details</a>
+                <a class="nav-item nav-link" id="nav-sat-tab" data-toggle="tab" href="#nav-sat" role="tab" aria-controls="nav-sat" aria-selected="false">SAT (Mexico only)</a>
+              </div>
+            </nav>
+            <div class="tab-content mt-3" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-transaction" role="tabpanel" aria-labelledby="nav-transaction-tab">
+                <div class="form-group">
+                  <label>Description</label>
+                  <input type="text" name="" class="form-control">
+                </div>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <label>Account</label>
+                    <select class="custom-select">
+                      <option>Cash on hand</option>
+                    </select>
+                  </div>                
+                  <div class="form-group col">
+                    <label>Date</label>
+                    <input type="text" name="" class="form-control">
+                  </div>                  
+                </div>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <label>Deposit or Withdrawal</label>
+                    <select class="custom-select">
+                      <option>Deposit</option>
+                    </select>
+                  </div>                
+                  <div class="form-group col">
+                    <label>Total Amount</label>
+                    <input type="text" name="" class="form-control">
+                  </div>                  
+                </div>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <label>Category</label>
+                    <select class="custom-select">
+                      <option>Uncategorized income</option>
+                    </select>
+                  </div>                
+                  <div class="form-group col">
+                    <label>Invoice</label><br>
+                    <a href="#" class="btn btn-link">invoice-2019082215A.pdf</a>
+                    <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                    <input type="file" name="">
+                  </div>                  
+                </div>                                                
+              </div>
+              <div class="tab-pane fade" id="nav-sat" role="tabpanel" aria-labelledby="nav-sat-tab">
+                <div class="form-group">
+                  <label>Folio</label>
+                  <input type="text" name="" class="form-control">
+                </div>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <label>Issued by</label>
+                    <input type="text" name="" class="form-control">
+                  </div>
+                  <div class="form-group col">
+                    <label>Issued RFC</label>
+                    <input type="text" name="" class="form-control">
+                  </div>                                  
+                </div>
+                <div class="form-group">
+                  <label>Payment Method</label>
+                  <select class="custom-select">
+                    <option>Cash</option>
+                    <option>...</option>
+                  </select>                  
+                </div>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <label>PDF Invoice</label><br>
+                    <a href="#" class="btn btn-link">invoice-2019082215A.pdf</a>
+                    <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                    <input type="file" name="">
+                  </div>
+                  <div class="form-group col">
+                    <label>XML Invoice</label><br>
+                    <a href="#" class="btn btn-link">invoice-2019082215A.pdf</a>
+                    <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                    <input type="file" name="">
+                  </div>                  
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer text-right">
+            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+            <a href="#" class="btn btn-secondary"><i class="fas fa-copy"></i></a>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+        </form>

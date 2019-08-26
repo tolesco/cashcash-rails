@@ -1,29 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>CashcashRails</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="cashcash-rails - Open source app for money management">
+    <meta name="author" content="@tolesco">
+    <title>cashcash-rails - Money management with ease</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Montserrat:400,700&display=swap" rel="stylesheet">
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/61edada64c.js"></script>
   </head>
-
   <body>
-    <%= render 'shared/flash_messages' %>
-    <ul>
-      <% if user_signed_in? %>
-        <li><a href="#">Dashboard</a></li>
-        <li><%= link_to 'Transactions', money_transactions_path %></li>
-        <li><%= link_to 'Accounts', accounts_path %></li>
-        <li><%= link_to 'Categories', categories_path %></li>
-        <li><%= link_to 'My profile', edit_user_registration_path %></li>
-        <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
-      <% else %>
-        <li><%= link_to 'Register', new_user_registration_path %></li>
-        <li><%= link_to 'Sign in', new_user_session_path %></li>
-      <% end %>
-    </ul>
-    <%= yield %>
+    <div class="d-flex" id="wrapper">
+      <%= render 'shared/sidebar' %>
+      <div id="page-content-wrapper">
+        <%= render 'shared/navbar' %>
+        <div class="container-fluid pb-5">
+          <%= render 'shared/flash_messages' %>
+          <%= yield %>             
+        </div>
+        <%= render 'shared/footer' %>
+      </div>
+    </div>
+    <!-- Menu Toggle Script -->
+    <script>
+      $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+      });
+    </script>
   </body>
 </html>
