@@ -10,32 +10,58 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :kind %>
-    <%= form.select :kind, options_for_select(Account.kinds.map{ |k| [k[0].humanize, k[0]] }) %>
+<div class="card">
+  <div class="card-body">
+    <form>
+      <div class="form-row">
+        <div class="form-group col">
+          <%= form.label :kind, 'Account Type' %>
+          <%= form.select :kind,
+              options_for_select(Account.kinds.map{ |k| [k[0].humanize, k[0]] }, account.kind), 
+              {}, 
+              class: 'custom-select' %>
+        </div>                
+        <div class="form-group col">
+          <%= form.label :name, 'Account Name' %>
+          <%= form.text_field :name, class: 'form-control' %>
+        </div>                  
+      </div>
+      <% if controller.action_name == 'edit' %>
+        <div class="form-row">
+          <div class="form-group col">
+            <%= form.label :description %>
+            <%= form.text_area :description, class: 'form-control' %>
+          </div>      
+          <div class="form-group col">
+            <%= form.label :current_balance, 'Current Balance' %>
+            <%= form.text_field :current_balance, 
+                class: 'form-control', 
+                value: number_to_currency(account.current_balance), 
+                disabled: true %>
+            <small>
+              <%= link_to 'Create a reconciliation transaction', new_money_transaction_path %> with the appropriate amount if you need adjust the account balance.
+            </small>
+          </div>          
+        </div>
+      <% else %>
+        <div class="form-group">
+          <%= form.label :description %>
+          <%= form.text_area :description, class: 'form-control' %>
+        </div>
+      <% end %>                            
+    </form>
   </div>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <% if controller.action_name == 'edit' %>
-    <div class="field">
-      <%= form.label :current_balance %>
-      <%= form.text_field :current_balance, disabled: true %><br>
-      <small><%= link_to 'Create a reconciliation transaction', new_money_transaction_path %> with the appropriate amount if you need adjust the account balance.</small>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div class="actions">
+  <div class="card-footer text-right">
     <%= form.hidden_field :user_id %>
-    <%= form.submit %>
+    <% if account.persisted? %>
+      <!-- <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a> -->
+      <%= link_to "<i class='fas fa-archive'></i>".html_safe,
+          account,
+          class: 'btn btn-danger',
+          method: :delete, 
+          data: {confirm: "Account #{account.name} will be archived. This action cannot undo."} %>
+    <% end %>
+    <%= form.submit "Save", class: 'btn btn-primary' %> <%= link_to 'Cancel', :back %>
   </div>
+</div>
 <% end %>

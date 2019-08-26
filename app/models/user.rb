@@ -9,6 +9,10 @@ class User < ApplicationRecord
   validates :sat_name, :sat_rfc, presence: true
   validates_uniqueness_of :sat_rfc, case_sensitive: false
 
+  def current_net_income
+    5000.0
+  end
+
   private
 
   def upcase_extra_params

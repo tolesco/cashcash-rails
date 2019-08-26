@@ -17,9 +17,9 @@
     <div class="d-flex" id="wrapper">
       <%= render 'shared/sidebar' %>
       <div id="page-content-wrapper">
+        <%= render 'shared/flash_messages' %>
         <%= render 'shared/navbar' %>
         <div class="container-fluid pb-5">
-          <%= render 'shared/flash_messages' %>
           <%= yield %>             
         </div>
         <%= render 'shared/footer' %>
