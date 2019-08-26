@@ -1,4 +1,4 @@
-<%= form_with(model: [@user, category], local: true) do |form| %>
+<%= form_with(model: category, local: true) do |form| %>
   <% if category.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
@@ -11,23 +11,47 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :associated_transaction_type %>
-    <%= form.select :associated_transaction_type, options_for_select(Category.associated_transaction_types.map{ |tt| [tt[0].humanize, tt[0]] }) %>
-  </div>
+        <div class="card">
+          <div class="card-body">
+            <form>
+              <div class="form-row">
+                <div class="form-group col">
+                  <%= form.label :name, 'Category Name' %>
+                  <%= form.text_field :name, class: 'form-control' %>
+                </div>                
+                <div class="form-group col">
+                  <%= form.label :associated_transaction_type, 'Associated Transaction Type' %>
+                  <%= form.select :associated_transaction_type,
+                      options_for_select(Category.associated_transaction_types.map{ |tt| [tt[0].humanize, tt[0]] }, category.associated_transaction_type), {}, class: 'custom-select' %>
+                </div>                  
+              </div>
+              <div class="form-group">
+                <%= form.label :description %>
+                <%= form.text_area :description, class: 'form-control' %>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer text-right">
+            <%= form.hidden_field :user_id %>
+            <% if category.persisted? %>
+              <%= link_to "<i class='fas fa-trash'></i>".html_safe,
+                  category, 
+                  method: :delete, 
+                  class: 'btn btn-danger', 
+                  data: {confirm: 'Category will be deleted and all its transactions will be uncategorized, are you sure?'} %>
+              
+            <% end %>
+            <%= form.submit "Save", class: 'btn btn-primary' %>
+            <%= link_to 'Cancel', :back %>
+          </div>
+        </div>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
+
+
+
 
   <div class="actions">
-    <%= form.hidden_field :user_id %>
-    <%= form.submit %>
+
   </div>
 <% end %>

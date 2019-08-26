@@ -61,7 +61,8 @@
           method: :delete, 
           data: {confirm: "Account #{account.name} will be archived. This action cannot undo."} %>
     <% end %>
-    <%= form.submit "Save", class: 'btn btn-primary' %> <%= link_to 'Cancel', :back %>
+    <%= form.submit "Save", class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', :back %>
   </div>
 </div>
 <% end %>

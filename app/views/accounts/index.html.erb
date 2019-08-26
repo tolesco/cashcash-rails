@@ -1,8 +1,7 @@
 <h1 class="text-brand-primary">Accounts</h1>
 <p class="text-sm">Lorem ipsum dolor sit amet...</p>
 <%= link_to 'New account', new_account_path, class: 'btn btn-primary' %>
-<div class="mt-3"></div>
-<p class="text-sm text-gray">
+<p class="text-sm text-gray mt-3">
   Net Income <strong><%= number_to_currency(current_user.current_net_income) %></strong>
 </p>
 <table class="table table-sm">
