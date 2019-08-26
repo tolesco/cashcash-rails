@@ -2,10 +2,10 @@
 <p class="text-sm">Lorem ipsum dolor sit amet...</p>
 <%= link_to 'New transaction', new_money_transaction_path, class: 'btn btn-primary' %>
 <nav class="navbar navbar-light bg-light mt-3 mb-3">
-  <form class="form-inline">
-    <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Search by description..." aria-label="Search">
-    <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
-  </form>
+  <%= form_with(url: money_transactions_path, method: :get, local: true, class: 'form-inline') do |form| %>
+    <%= form.text_field :search, class: 'form-control form-control-sm mr-sm-2', placeholder: 'Search by description...' %>
+    <%= form.button "<i class='fas fa-search'></i>".html_safe, type: 'submit', name: nil, class: 'btn btn-sm btn-outline-primary my-2 my-sm-0' %>
+  <% end %>
   <form class="form-inline">
     <select class="custom-select custom-select-sm mr-sm-2">
       <option>All accounts</option>
@@ -58,12 +58,5 @@
     <% end %>           
   </tbody>
 </table>
-<nav class="nav justify-content-center">
-  <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-left"></i> Prev</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next <i class="fas fa-angle-right"></i></a></li>
-  </ul>
-</nav>
+<%== pagy_bootstrap_nav(@pagy) %>
+<%== pagy_info(@pagy) %>

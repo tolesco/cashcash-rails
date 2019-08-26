@@ -1,10 +1,19 @@
 class MoneyTransactionsController < ApplicationController
+  include Pagy::Backend
   before_action :set_money_transaction, only: [:edit, :update, :destroy]
 
   # GET /money_transactions
   # GET /money_transactions.json
   def index
-    @money_transactions = MoneyTransaction.joins(:account).where('accounts.user_id = ?', current_user)
+    case 
+    when params[:search].present?
+      search = "%#{params[:search]}%"
+      records = MoneyTransaction.joins(:account).where('accounts.user_id = ?', current_user).
+      where('money_transactions.description ILIKE ?', search)
+    else
+      records = MoneyTransaction.joins(:account).where('accounts.user_id = ?', current_user)
+    end
+    @pagy, @money_transactions = pagy(records, items: 10)
   end
 
   # GET /money_transactions/1
