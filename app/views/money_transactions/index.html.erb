@@ -4,29 +4,20 @@
 <nav class="navbar navbar-light bg-light mt-3 mb-3">
   <%= form_with(url: money_transactions_path, method: :get, local: true, class: 'form-inline') do |form| %>
     <%= form.text_field :search, class: 'form-control form-control-sm mr-sm-2', placeholder: 'Search by description...' %>
-    <%= form.button "<i class='fas fa-search'></i>".html_safe, type: 'submit', name: nil, class: 'btn btn-sm btn-outline-primary my-2 my-sm-0' %>
-  <% end %>
-  <form class="form-inline">
-    <select class="custom-select custom-select-sm mr-sm-2">
-      <option>All accounts</option>
-      <option>Cash on hand</option>
-      <option>Santander debit XXXX</option>
-      <option>Santander credit XXXX</option>
-    </select>
-    <select class="custom-select custom-select-sm mr-sm-2">
-      <option>All categories</option>
-      <option>Sales</option>
-      <option>Transportation</option>
-      <option>Rent</option>
-      <option>Payroll</option>
-      <option>Home & Maintenance</option>
-    </select>
-    <input class="form-control form-control-sm mr-sm-2" type="text" placeholder="Select date range..." aria-label="date-range">
-    <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-filter"></i></button>
-  </form>          
+    <%= form.select :account, 
+        options_for_select(current_user.accounts.kept.map{ |a| [a.name, a.id] }),
+        {prompt: 'All accounts'}, 
+        class: 'custom-select custom-select-sm mr-sm-2' %>
+    <%= form.select :category, 
+        options_for_select(current_user.categories.map{ |c| [c.name, c.id] }),
+        {prompt: 'All categories'}, 
+        class: 'custom-select custom-select-sm mr-sm-2' %>
+    <%= form.text_field :date_range, placeholder: 'Select date range...', class: 'form-control form-control-sm mr-sm-2 date-range-picker-here' %>
+    <%= form.button "<i class='fas fa-filter'></i>".html_safe, type: 'submit', name: nil, class: 'btn btn-sm btn-outline-primary my-2 my-sm-0' %>
+  <% end %>        
 </nav>
 <p>
-  <span class="text-sm text-gray">Transactions from <strong>2019/05/01</strong> to <strong>2019/08/15</strong> in <strong>All accounts</strong> / <strong>All categories</strong></span>
+  <%= render 'label_records_filtered' %>   
   <span>
     <a href="#" class="btn btn-sm btn-link">Export to CSV</a>
     <a href="#" class="btn btn-sm btn-link">Export to PDF</a>
@@ -45,7 +36,7 @@
   <tbody>
     <% @money_transactions.each do |mt| %>
       <tr>
-        <td><%= mt.done_at %></td>
+        <td><%= mt.done_at.strftime("%d/%m/%Y") %></td>
         <td><%= mt.description %></td>
         <td>
           <span class="text-<%= mt.deposit? ? 'success' : 'normal' %>">
@@ -53,7 +44,7 @@
           </span>
         </td>
         <td><%= mt.category.name %></td>
-        <td><%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_money_transaction_path(mt) %></td>
+        <td><%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_money_transaction_path(mt), data:{ turbolinks: false} %></td>
       </tr>
     <% end %>           
   </tbody>

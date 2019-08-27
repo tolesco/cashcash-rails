@@ -10,9 +10,6 @@
       </ul>
     </div>
   <% end %>
-
-
-
         <div class="card">
           <div class="card-body">
             <nav>
@@ -31,20 +28,22 @@
                   <div class="form-group col">
                     <%= form.label :account_id, 'Account' %>
                     <%= form.select :account_id, 
-                        options_for_select(current_user.accounts.kept.map{ |a| [a.name, a.id] }, money_transaction.account), 
+                        options_for_select(current_user.accounts.kept.map{ |a| [a.name, a.id] }, money_transaction.persisted? ? money_transaction.account.id : '' ), 
                         {}, 
                         class: 'custom-select' %>
                   </div>                
                   <div class="form-group col">
                     <%= form.label :done_at, 'Date' %>
-                    <%# form.date_select :done_at %>
-                    <%= form.text_field :done_at, class: 'form-control' %>
+                    <%= form.text_field :done_at,
+                        class: 'form-control single-date-picker-here', 
+                        value: money_transaction.persisted? ? money_transaction.done_at.strftime("%d/%m/%Y") : '' %>
                   </div>                  
                 </div>
                 <div class="form-row">
                   <div class="form-group col">
                     <%= form.label :kind, 'Deposit or Withdrawal' %>
-                    <%= form.select :kind, options_for_select(MoneyTransaction.kinds.map{ |mt| [mt[0].humanize, mt[0]]}, money_transaction.kind), {}, class: 'custom-select' %>
+                    <%= form.select :kind, options_for_select(MoneyTransaction.kinds.map{ |mt| [mt[0].humanize, mt[0]]}, money_transaction.kind),
+                        {}, class: 'custom-select' %>
                   </div>                
                   <div class="form-group col">
                     <%= form.label :amount, 'Total Amount' %>
@@ -54,7 +53,9 @@
                 <div class="form-row">
                   <div class="form-group col">
                     <%= form.label :category_id, 'Category' %>
-                    <%= form.select :category_id, options_for_select(current_user.categories.map{ |c| [c.name, c.id] }, money_transaction.category), {}, class: 'custom-select' %>
+                    <%= form.select :category_id, 
+                        options_for_select(current_user.categories.map{ |c| [c.name, c.id] }, money_transaction.persisted? ? money_transaction.category.id : ''),
+                        {}, class: 'custom-select' %>
                   </div>                
                   <div class="form-group col">
                     <%= form.label :invoice %><br>

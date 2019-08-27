@@ -1,0 +1,45 @@
+<span class="text-sm text-gray">
+  <% if params[:search].present? && params[:account].present? && params[:category].present? && params[:date_range].present? %>
+    <!-- Search and all filters-->
+    Transactions for <strong><%= params[:search] %></strong> in <strong><%= params[:date_range] %></strong> in <strong><%= @account.name %> / <%= @category.name %></strong>
+  <% elsif params[:search].present? && params[:account].present? && params[:category].present? %>
+    <!-- Search with account and category-->
+    Transactions for <strong><%= params[:search] %></strong> in <strong>All time</strong> in <strong><%= @account.name %> / <%= @category.name %></strong>
+  <% elsif params[:search].present? && params[:account].present? %>
+    <!-- Search with account-->
+    Transactions for <strong><%= params[:search] %></strong> in <strong>All time</strong> in <strong><%= @account.name %> / All categories</strong>
+  <% elsif params[:search].present? && params[:category].present? %>
+    <!-- Search with category-->
+    Transactions for <strong><%= params[:search] %></strong> in <strong>All time</strong> in <strong>All accounts / <%= @category.name %></strong>
+  <% elsif params[:search].present? && params[:date_range].present? %>
+    <!-- Search with date_range-->
+    Transactions for <strong><%= params[:search] %></strong> in <strong><%= params[:date_range] %></strong> in <strong>All accounts / All categories</strong>
+  <% elsif params[:search].present? %>
+    <!-- Only search-->
+    Transactions for <strong><%= params[:search] %></strong> in <strong>All time</strong> in <strong>All accounts / All categories</strong>
+  <% elsif params[:account].present? && params[:category].present? && params[:date_range].present? %>
+    <!-- All filters-->
+    Transactions in <strong><%= params[:date_range] %></strong> in <strong><%= @account.name %> / <%= @category.name %></strong>
+  <% elsif params[:account].present? && params[:category].present? %>
+    <!-- Account and category-->
+    Transactions in <strong>All time</strong> in <strong><%= @account.name %> / <%= @category.name %></strong>
+  <% elsif params[:account].present? %>
+    <!-- Only account-->
+    Transactions in <strong>All time</strong> in <strong><%= @account.name %> / All categories</strong>
+  <% elsif params[:account].present? && params[:date_range].present? %>
+    <!-- Account and date_range -->
+    Transactions in <strong><%= params[:date_range] %></strong> in <strong><%= @account.name %> / All categories</strong>
+  <% elsif params[:category].present? && params[:date_range].present? %>    
+    <!-- Category and date_range -->
+    Transactions in <strong><%= params[:date_range] %></strong> in <strong>All accounts / <%= @category.name %></strong>
+  <% elsif params[:category].present? %>
+    <!-- Only category-->
+    Transactions in <strong>All time</strong> in <strong>All accounts / <%= @category.name %></strong>
+  <% elsif params[:date_range].present? %>
+    <!-- Only date_range-->
+    Transactions in <strong><%= params[:date_range] %></strong> in <strong>All accounts / All categories</strong>
+  <% else %>
+    <!-- All user transactions-->
+    Transactions in <strong>All time</strong> in <strong>All accounts / All categories</strong>
+  <% end %>
+</span>

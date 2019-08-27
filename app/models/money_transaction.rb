@@ -8,6 +8,102 @@ class MoneyTransaction < ApplicationRecord
   after_commit :update_account_balance, on: [:create, :update, :destroy]
   validates_presence_of :amount, :kind
 
+  def self.find_by_filters(user, search, account, category, date_range)
+    # Get dates
+    if date_range.present?
+      date_range.gsub!(/\s+/, '')
+      date_arr = date_range.split('-')
+      begin_date = Date.parse(date_arr[0])
+      end_date   = Date.parse(date_arr[1])
+    end
+    # Search and all filters
+    if user.present? && search.present? && account.present? && category.present? && date_range.present?
+      logger.info 'Search and all filters'.upcase
+      return joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user).
+            where('money_transactions.description ILIKE ?', "%#{search}%").
+            where(account: account, category: category, done_at: begin_date..end_date)      
+    end
+    # Search with account and category
+    if user.present? && search.present? && account.present? && category.present?
+      logger.info 'Search with account and category'.upcase
+      return joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user).
+            where('money_transactions.description ILIKE ?', "%#{search}%").
+            where(account: account, category: category)      
+    end
+    # Search with account
+    if user.present? && search.present? && account.present?
+      logger.info 'Search with account'.upcase
+      return joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user).
+            where('money_transactions.description ILIKE ?', "%#{search}%").
+            where(account: account)      
+    end
+    # Search with category
+    if user.present? && search.present? && category.present?
+      logger.info 'Search with category'.upcase
+      return joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user).
+            where('money_transactions.description ILIKE ?', "%#{search}%").
+            where(category: category)      
+    end
+    # Search with date_range
+    if user.present? && search.present? && date_range.present?
+      logger.info 'Search with date_range'.upcase
+      return joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user).
+            where('money_transactions.description ILIKE ?', "%#{search}%").
+            where(done_at: begin_date..end_date)      
+    end                      
+    # Only search
+    if user.present? && search.present?
+      logger.info 'Only search'.upcase
+      return joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user).
+            where('money_transactions.description ILIKE ?', "%#{search}%")      
+    end
+    # All filters
+    if user.present? && account.present? && category.present? && date_range.present?
+      logger.info 'All filters'.upcase
+      return joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user).
+             where(account: account, category: category, done_at: begin_date..end_date)      
+    end
+    # Account and category
+    if user.present? && account.present? && category.present?
+      logger.info 'Account and category'.upcase
+      return joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user).
+             where(account: account, category: category)      
+    end
+    # Account and date_range
+    if user.present? && account.present? && date_range.present?
+      logger.info 'Account with range_date'.upcase
+      return joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user).
+             where(account: account, done_at: begin_date..end_date)      
+    end
+    # Category and date_range
+    if user.present? && category.present? && date_range.present?
+      logger.info 'Category with range_date'.upcase
+      return joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user).
+             where(category: category, done_at: begin_date..end_date)      
+    end                
+    # Only account
+    if user.present? && account.present?
+      logger.info 'Only account'.upcase
+      return joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user).
+            where(account: account)      
+    end            
+    # Only category
+    if user.present? && category.present?
+      logger.info 'Only category'.upcase
+      return joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user).
+             where(category: category)      
+    end
+    # Only date_range
+    if user.present? && date_range.present?
+      logger.info 'Only date_range'.upcase
+      return joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user).
+             where(done_at: begin_date..end_date)      
+    end
+    # All user transactions
+    logger.info 'All user transactions'.upcase
+    joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user) 
+  end
+
   def update_account_balance
     new_account_balance = 0.0
     self.account.money_transactions.each do |mt|

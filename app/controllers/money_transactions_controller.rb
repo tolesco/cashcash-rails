@@ -5,14 +5,10 @@ class MoneyTransactionsController < ApplicationController
   # GET /money_transactions
   # GET /money_transactions.json
   def index
-    case 
-    when params[:search].present?
-      search = "%#{params[:search]}%"
-      records = MoneyTransaction.joins(:account).where('accounts.user_id = ?', current_user).
-      where('money_transactions.description ILIKE ?', search)
-    else
-      records = MoneyTransaction.joins(:account).where('accounts.user_id = ?', current_user)
-    end
+    @account  = Account.where(id: params[:account]).first
+    @category = Category.where(id: params[:category]).first
+    records   = MoneyTransaction.find_by_filters(current_user, params[:search], params[:account], params[:category], params[:date_range])
+    # Paginate results
     @pagy, @money_transactions = pagy(records, items: 10)
   end
 
