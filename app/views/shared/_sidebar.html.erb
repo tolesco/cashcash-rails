@@ -6,18 +6,27 @@
     </a>
   </div>
   <div class="list-group list-group-flush">
-    <a href="<%= root_path %>" class="list-group-item list-group-item-action">
-      <i class="fas fa-fw fa-light fa-tachometer-alt"></i> Dashboard
-    </a>
-    <a href="<%= money_transactions_path %>" class="list-group-item list-group-item-action">
-      <i class="fas fa-fw fa-light fa-money-check-alt"></i> Transactions
-    </a>
-    <a href="<%= accounts_path %>" class="list-group-item list-group-item-action">
-      <i class="fas fa-fw fa-light fa-wallet"></i> Accounts
-    </a>
-    <a href="<%= categories_path %>" class="list-group-item list-group-item-action">
-      <i class="fas fa-fw fa-light fa-tags"></i> Categories
-    </a>
+    <% if user_signed_in? %>
+      <a href="<%= root_path %>" class="list-group-item list-group-item-action">
+        <i class="fas fa-fw fa-light fa-tachometer-alt"></i> Dashboard
+      </a>
+      <a href="<%= money_transactions_path %>" class="list-group-item list-group-item-action">
+        <i class="fas fa-fw fa-light fa-money-check-alt"></i> Transactions
+      </a>
+      <a href="<%= accounts_path %>" class="list-group-item list-group-item-action">
+        <i class="fas fa-fw fa-light fa-wallet"></i> Accounts
+      </a>
+      <a href="<%= categories_path %>" class="list-group-item list-group-item-action">
+        <i class="fas fa-fw fa-light fa-tags"></i> Categories
+      </a>    
+    <% else %>
+      <a href="<%= new_user_registration_path %>" class="list-group-item list-group-item-action">
+        <i class="fas fa-fw fa-light fa-user-plus"></i> Register
+      </a>
+      <a href="<%= root_path %>" class="list-group-item list-group-item-action">
+        <i class="fas fa-fw fa-light fa-sign-in-alt"></i> Login
+      </a>    
+    <% end %>
   </div>
 </div>
 <!-- /#sidebar-wrapper -->
