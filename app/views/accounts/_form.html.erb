@@ -59,7 +59,11 @@
           account,
           class: 'btn btn-danger',
           method: :delete, 
-          data: {confirm: "Account #{account.name} will be archived. This action cannot undo."} %>
+          data: {confirm: "Account #{account.name} will be archived. This action cannot undo."} unless account.discarded? %>
+      <%= link_to "<i class='fas fa-undo'></i>".html_safe,
+          unarchive_account_path(account),
+          class: 'btn btn-success',
+          method: :patch if account.discarded? %>          
     <% end %>
     <%= form.submit "Save", class: 'btn btn-primary' %>
     <%= link_to 'Cancel', :back %>

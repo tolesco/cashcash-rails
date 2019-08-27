@@ -1,10 +1,14 @@
 class AccountsController < ApplicationController
-  before_action :set_account, only: [:show, :edit, :update, :destroy]
+  before_action :set_account, only: [:show, :edit, :update, :unarchive, :destroy]
 
   # GET /accounts
   # GET /accounts.json
   def index
-    @accounts = Account.kept
+    if params[:archived].present?
+      @accounts = Account.discarded
+    else
+      @accounts = Account.kept
+    end
   end
 
   # GET /accounts/1
@@ -49,6 +53,12 @@ class AccountsController < ApplicationController
         # format.json { render json: @account.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # PATCH/PUT /accounts/1/unarchive
+  def unarchive
+    @account.undiscard
+    redirect_to accounts_url, notice: 'Account was successfully recovered'
   end
 
   # DELETE /accounts/1
