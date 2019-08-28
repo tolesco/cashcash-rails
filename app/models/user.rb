@@ -10,7 +10,7 @@ class User < ApplicationRecord
   validates_uniqueness_of :sat_rfc, case_sensitive: false
 
   def current_net_income
-    5000.0
+    return Account.where('user_id = ? AND discarded_at IS NULL', self).sum(:current_balance)
   end
 
   def create_default_categories_and_accounts

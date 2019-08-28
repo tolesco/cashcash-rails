@@ -5,7 +5,8 @@ class MoneyTransaction < ApplicationRecord
   has_one_attached :cfdi_pdf
   has_one_attached :cfdi_xml
   enum kind: [:deposit, :withdrawal]
-  after_commit :update_account_balance, on: [:create, :update, :destroy]
+  after_commit   :update_account_balance, on: [:create, :update]
+  after_destroy  :update_account_balance
   validates_presence_of :amount, :kind
 
   def self.find_by_filters(user, search, account, category, date_range)
@@ -105,16 +106,19 @@ class MoneyTransaction < ApplicationRecord
   end
 
   def update_account_balance
-    new_account_balance = 0.0
-    self.account.money_transactions.each do |mt|
-      case mt.kind
-      when 'deposit'
-        new_account_balance += mt.amount
-      when 'withdrawal'
-        new_account_balance -= mt.amount
+    accounts = self.account.user.accounts
+    accounts.each do |account|
+      new_account_balance = 0.0
+      account.money_transactions.each do |mt|
+        case mt.kind
+        when 'deposit'
+          new_account_balance += mt.amount
+        when 'withdrawal'
+          new_account_balance -= mt.amount
+        end
       end
+      account.update(current_balance: new_account_balance)
     end
-    self.account.update(current_balance: new_account_balance)
   end
 
   def self.to_csv(records)

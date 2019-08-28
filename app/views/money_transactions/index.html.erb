@@ -5,14 +5,14 @@
   <%= form_with(url: money_transactions_path, method: :get, local: true, class: 'form-inline') do |form| %>
     <%= form.text_field :search, class: 'form-control form-control-sm mr-sm-2', placeholder: 'Search by description...' %>
     <%= form.select :account, 
-        options_for_select(current_user.accounts.kept.map{ |a| [a.name, a.id] }),
-        {prompt: 'All accounts'}, 
+        options_for_select(current_user.accounts.kept.map{ |a| ["#{a.name} #{number_to_currency(a.current_balance)}", a.id] }, params[:account]),
+        {prompt: "All accounts #{number_to_currency(current_user.current_net_income)}"}, 
         class: 'custom-select custom-select-sm mr-sm-2' %>
     <%= form.select :category, 
-        options_for_select(current_user.categories.map{ |c| [c.name, c.id] }),
+        options_for_select(current_user.categories.map{ |c| [c.name, c.id] }, params[:category]),
         {prompt: 'All categories'}, 
         class: 'custom-select custom-select-sm mr-sm-2' %>
-    <%= form.text_field :date_range, placeholder: 'Select date range...', class: 'form-control form-control-sm mr-sm-2 date-range-picker-here' %>
+    <%= form.text_field :date_range, placeholder: 'Select date range...', value: params[:date_range], class: 'form-control form-control-sm mr-sm-2 date-range-picker-here' %>
     <%= form.button "<i class='fas fa-filter'></i>".html_safe, type: 'submit', name: nil, class: 'btn btn-sm btn-outline-primary my-2 my-sm-0' %>
   <% end %>        
 </nav>
@@ -30,6 +30,7 @@
       <th>Description</th>
       <th>Amount</th>
       <th>Category</th>
+      <th>Account</th>
       <th></th>
     </tr>
   </thead>
@@ -44,6 +45,7 @@
           </span>
         </td>
         <td><%= mt.category.name %></td>
+        <td><%= mt.account.name %></td>
         <td><%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_money_transaction_path(mt), data:{ turbolinks: false} %></td>
       </tr>
     <% end %>           

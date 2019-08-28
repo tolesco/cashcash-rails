@@ -1,8 +1,9 @@
 <h1 class="text-brand-primary"><%= params[:archived].present? ? 'Accounts (archived)' : 'Accounts' %></h1>
+<p class="text-sm">Lorem ipsum dolor sit amet...</p>
+<%= link_to 'New account', new_account_path, class: 'btn btn-primary mb-3' unless params[:archived].present? %>
 <p class="text-sm">
-  <%= link_to "<i class='fas fa-archive'></i> Review archived accounts".html_safe, accounts_path(archived: true) unless params[:archived].present? %>
+  <%= link_to "View archived accounts <i class='fas fa-archive'></i>".html_safe, accounts_path(archived: true) unless params[:archived].present? %>
 </p>
-<%= link_to 'New account', new_account_path, class: 'btn btn-primary' unless params[:archived].present? %>
 <% unless params[:archived].present? %>
   <p class="text-sm text-gray mt-3">Net Income <strong><%= number_to_currency(current_user.current_net_income) %></strong></p>
 <% end %>
