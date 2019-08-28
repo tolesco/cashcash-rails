@@ -54,10 +54,14 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
-    @category.destroy
-    respond_to do |format|
-      format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
-      # format.json { head :no_content }
+    if @category.destroy
+      respond_to do |format|
+        format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to categories_url, alert: 'This category cannot be removed.' }
+      end      
     end
   end
 
@@ -69,6 +73,6 @@ class CategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:associated_transaction_type, :name, :description, :data, :user_id)
+      params.require(:category).permit(:associated_transaction_type, :name, :description, :data, :user_id, :immortal)
     end
 end

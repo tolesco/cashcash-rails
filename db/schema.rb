@@ -65,8 +65,8 @@ ActiveRecord::Schema.define(version: 2019_08_25_160827) do
   create_table "money_transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "description"
     t.date "done_at"
-    t.integer "kind"
-    t.decimal "amount"
+    t.integer "kind", null: false
+    t.decimal "amount", null: false
     t.text "notes"
     t.string "cfdi_folio"
     t.string "cfdi_issued_by"
@@ -87,8 +87,8 @@ ActiveRecord::Schema.define(version: 2019_08_25_160827) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "sat_name", null: false
-    t.string "sat_rfc", null: false
+    t.string "sat_name"
+    t.string "sat_rfc"
     t.jsonb "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -1,6 +1,6 @@
 <h1 class="text-brand-primary">Transactions</h1>
 <p class="text-sm">Lorem ipsum dolor sit amet...</p>
-<%= link_to 'New transaction', new_money_transaction_path, class: 'btn btn-primary' %>
+<%= link_to 'New transaction', new_money_transaction_path, class: 'btn btn-primary', data: {turbolinks: false} %>
 <nav class="navbar navbar-light bg-light mt-3 mb-3">
   <%= form_with(url: money_transactions_path, method: :get, local: true, class: 'form-inline') do |form| %>
     <%= form.text_field :search, class: 'form-control form-control-sm mr-sm-2', placeholder: 'Search by description...' %>

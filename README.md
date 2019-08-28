@@ -7,5 +7,4 @@
 * cashcash-rails is designed as a single user system. Multiple users are not allowed.
 * Account types are statically defined as an enum in the Account class.
 * Uncategorized income and uncategorized expense categories can't be removed.
-* User can't recovery or trash an archived account.
-* User can't edit, archive or trash an account reconciliation.
+* User can't trash an archived account.

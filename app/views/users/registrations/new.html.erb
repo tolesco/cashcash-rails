@@ -3,24 +3,24 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="form-group">
+  <div class="form-group row">
     <div class="col-3">
       <%= f.label :email %><br />
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group row">
     <div class="col-3">
       <%= f.label :password %>
+      <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
       <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <small>(<%= @minimum_password_length %> characters minimum)</small>
       <% end %><br />
-      <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>      
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group row">
     <div class="col-3">
       <%= f.label :password_confirmation, 'Password Confirmation' %><br />
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>      

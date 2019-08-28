@@ -33,8 +33,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       # t.datetime :locked_at
 
       ## Sistema de Administración Tributaria (SAT) fields to process CFDI/XML (Mexico only)
-      t.string :sat_name,   null: false
-      t.string :sat_rfc,    null: false
+      t.string :sat_name
+      t.string :sat_rfc
 
       ## Additional fields
       t.jsonb  :data
