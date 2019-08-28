@@ -3,6 +3,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
+  before_action :one_user_registered?, only: [:new, :create]
 
   # GET /resource/sign_up
   def new
@@ -52,6 +53,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def extra_params
     [:sat_name, :sat_rfc]
+  end
+
+  def one_user_registered?
+    if User.count == 1
+      if user_signed_in?
+        redirect_to root_path
+      else
+        redirect_to new_user_session_path, notice: 'Already exists 1 user registered, cashcash-rails is a single user system.'
+      end
+    end  
   end
 
   # The path used after sign up.
