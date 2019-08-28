@@ -119,11 +119,11 @@ class MoneyTransaction < ApplicationRecord
 
   def self.to_csv(records)
     require 'csv'
-    transactions = records.order('done_at asc')
+    money_transactions = records.order('done_at asc')
     CSV.generate(headers: true, encoding: 'utf-8') do |csv|
       csv << ['date', 'description', 'amount', 'type', 'category']
-      transactions.each do |transaction|
-        csv << [transaction.done_at, transaction.description, transaction.amount, transaction.kind, transaction.category.name]
+      money_transactions.each do |mt|
+        csv << [mt.done_at, mt.description, mt.amount, mt.kind, mt.category.name]
       end
     end    
   end  

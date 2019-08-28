@@ -19,7 +19,7 @@
 <p>
   <%= render 'label_records_filtered' %>   
   <span>
-    <%= link_to 'Export to CSV', money_transactions_path(format: 'csv'), class: 'btn btn-sm btn-link' %>
+    <%= link_to 'Export to CSV', money_transactions_path(request.parameters.merge({format: 'csv'})), class: 'btn btn-sm btn-link' %>
     <a href="#" class="btn btn-sm btn-link">Export to PDF</a>
   </span>          
 </p>
