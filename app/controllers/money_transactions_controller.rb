@@ -8,8 +8,10 @@ class MoneyTransactionsController < ApplicationController
     @account  = Account.where(id: params[:account]).first
     @category = Category.where(id: params[:category]).first
     records   = MoneyTransaction.find_by_filters(current_user, params[:search], params[:account], params[:category], params[:date_range])
-    # Paginate results
-    @pagy, @money_transactions = pagy(records, items: 10)
+    respond_to do |format|
+      format.html{ @pagy, @money_transactions = pagy(records, items: 10) }
+      format.csv { send_data MoneyTransaction.to_csv(records), filename: "cashcash-transactions-#{Date.today}.csv" }
+    end
   end
 
   # GET /money_transactions/1

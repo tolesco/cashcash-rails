@@ -116,4 +116,15 @@ class MoneyTransaction < ApplicationRecord
     end
     self.account.update(current_balance: new_account_balance)
   end
+
+  def self.to_csv(records)
+    require 'csv'
+    transactions = records.order('done_at asc')
+    CSV.generate(headers: true, encoding: 'utf-8') do |csv|
+      csv << ['date', 'description', 'amount', 'type', 'category']
+      transactions.each do |transaction|
+        csv << [transaction.done_at, transaction.description, transaction.amount, transaction.kind, transaction.category.name]
+      end
+    end    
+  end  
 end
