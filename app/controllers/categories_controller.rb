@@ -1,15 +1,9 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_category, only: [:edit, :update, :destroy]
 
   # GET /categories
-  # GET /categories.json
   def index
     @categories = Category.where(user: current_user)
-  end
-
-  # GET /categories/1
-  # GET /categories/1.json
-  def show
   end
 
   # GET /categories/new
@@ -22,46 +16,30 @@ class CategoriesController < ApplicationController
   end
 
   # POST /categories
-  # POST /categories.json
   def create
     @category = Category.new(category_params)
-
-    respond_to do |format|
-      if @category.save
-        format.html { redirect_to categories_url, notice: 'Category was successfully created.' }
-        # format.json { render :show, status: :created, location: @category }
-      else
-        format.html { render :new }
-        # format.json { render json: @category.errors, status: :unprocessable_entity }
-      end
+    if @category.save
+      redirect_to categories_url, notice: 'Category was successfully created.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /categories/1
-  # PATCH/PUT /categories/1.json
   def update
-    respond_to do |format|
-      if @category.update(category_params)
-        format.html { redirect_to categories_url, notice: 'Category was successfully updated.' }
-        # format.json { render :show, status: :ok, location: @category }
-      else
-        format.html { render :edit }
-        # format.json { render json: @category.errors, status: :unprocessable_entity }
-      end
+    if @category.update(category_params)
+      redirect_to categories_url, notice: 'Category was successfully updated.'
+    else
+      render :edit
     end
   end
 
   # DELETE /categories/1
-  # DELETE /categories/1.json
   def destroy
     if @category.destroy
-      respond_to do |format|
-        format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
-      end
+      redirect_to categories_url, notice: 'Category was successfully destroyed.'
     else
-      respond_to do |format|
-        format.html { redirect_to categories_url, alert: 'This category cannot be removed.' }
-      end      
+      redirect_to categories_url, alert: 'This category cannot be removed.'      
     end
   end
 

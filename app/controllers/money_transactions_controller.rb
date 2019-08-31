@@ -3,7 +3,6 @@ class MoneyTransactionsController < ApplicationController
   before_action :set_money_transaction, only: [:edit, :update, :destroy]
 
   # GET /money_transactions
-  # GET /money_transactions.json
   def index
     @account  = Account.where(id: params[:account]).first
     @category = Category.where(id: params[:category]).first
@@ -13,11 +12,6 @@ class MoneyTransactionsController < ApplicationController
       format.csv { send_data MoneyTransaction.to_csv(records), filename: "cashcash-transactions-#{Date.today}.csv" }
     end
   end
-
-  # GET /money_transactions/1
-  # GET /money_transactions/1.json
-  # def show
-  # end
 
   # GET /money_transactions/new
   def new
@@ -29,43 +23,28 @@ class MoneyTransactionsController < ApplicationController
   end
 
   # POST /money_transactions
-  # POST /money_transactions.json
   def create
     @money_transaction = MoneyTransaction.new(money_transaction_params)
-
-    respond_to do |format|
-      if @money_transaction.save
-        format.html { redirect_to money_transactions_url, notice: 'Money transaction was successfully created.' }
-        # format.json { render :show, status: :created, location: @money_transaction }
-      else
-        format.html { render :new }
-        # format.json { render json: @money_transaction.errors, status: :unprocessable_entity }
-      end
+    if @money_transaction.save
+      redirect_to money_transactions_url, notice: 'Money transaction was successfully created.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /money_transactions/1
-  # PATCH/PUT /money_transactions/1.json
-  def update
-    respond_to do |format|
-      if @money_transaction.update(money_transaction_params)
-        format.html { redirect_to money_transactions_url, notice: 'Money transaction was successfully updated.' }
-        # format.json { render :show, status: :ok, location: @money_transaction }
-      else
-        format.html { render :edit }
-        # format.json { render json: @money_transaction.errors, status: :unprocessable_entity }
-      end
+  def update    
+    if @money_transaction.update(money_transaction_params)
+      redirect_to edit_money_transaction_path(@money_transaction), notice: 'Money transaction was successfully updated.'
+    else
+      render :edit
     end
   end
 
   # DELETE /money_transactions/1
-  # DELETE /money_transactions/1.json
   def destroy
     @money_transaction.destroy
-    respond_to do |format|
-      format.html { redirect_to money_transactions_url, notice: 'Money transaction was successfully destroyed.' }
-      # format.json { head :no_content }
-    end
+    redirect_to money_transactions_url, notice: 'Money transaction was successfully destroyed.'
   end
 
   private
