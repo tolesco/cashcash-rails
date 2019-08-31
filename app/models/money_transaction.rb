@@ -105,6 +105,19 @@ class MoneyTransaction < ApplicationRecord
     joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user) 
   end
 
+  def self.group_by_categories(user, year)
+    categories_and_percentages = {}
+    total_year_expense = 0.0  
+    user.accounts.each do |account|
+      total_year_expense += account.money_transactions.where('kind = ? AND extract(year from done_at) = ?', MoneyTransaction.kinds[:withdrawal], year).sum(:amount)
+    end
+    user.categories.where(associated_transaction_type: 'withdrawal').each do |category|
+      total_year_category_expense = category.money_transactions.where('extract(year from done_at) = ?', year).sum(:amount)
+      categories_and_percentages[category.name] = ((total_year_category_expense/total_year_expense)*100.0).round(2)
+    end
+    return categories_and_percentages
+  end
+
   def update_account_balance
     accounts = self.account.user.accounts
     accounts.each do |account|

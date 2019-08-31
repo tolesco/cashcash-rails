@@ -9,7 +9,7 @@
         <li><%= link_to "#{account.name} #{number_to_currency(account.current_balance)}", money_transactions_path(account: account) %></li>
       <% end %>
     </ul>
-    <a href="#" class="btn btn-primary">New account</a>
+    <a href="<%= new_account_path %>" class="btn btn-primary">New account</a>
     <div class="mt-5"></div>
     <h2>Categories</h2>
     <p>Most used</p>
@@ -18,7 +18,7 @@
         <li><%= link_to category.name, edit_category_path(category) %></li>
       <% end %>
     </ul>
-    <a href="#" class="btn btn-primary">New category</a>            
+    <a href="<%= new_category_path %>" class="btn btn-primary">New category</a>            
   </div>
   <div class="col">
     <h2>Averages</h2>
@@ -48,6 +48,6 @@
     <div class="mt-5"></div>
     <h2>Expenses Breakdown</h2>
     <p>This year</p>
-    [PIE_CHART]            
+    <%= pie_chart MoneyTransaction.group_by_categories(current_user, Time.zone.now.year), suffix: "%" %>            
   </div>
 </div>
