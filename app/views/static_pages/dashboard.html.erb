@@ -27,7 +27,7 @@
       <div class="col text-center">
         <div class="card">
           <div class="card-body">
-            <h3 class="text-success">$5,000</h3>
+            <h3 class="text-success"><%= number_to_currency(current_user.monthly_average(:deposit)) %></h3>
           </div>
         </div>
         <p>Average monthly income</p>
@@ -35,16 +35,16 @@
       <div class="col text-center">
         <div class="card">
           <div class="card-body">
-            <h3>$5,000</h3>
+            <h3><%= number_to_currency(current_user.monthly_average(:withdrawal)) %></h3>
           </div>
         </div>
         <p>Average monthly expense</p>
       </div>              
     </div>
     <div class="mt-5"></div>
-    <h2>Cash Flow</h2>
+    <h2>Income & Expenses</h2>
     <p>Last 12 months</p>
-    [LINE_CHART]
+    <%= column_chart MoneyTransaction.group(:kind).group_by_month(:done_at, last: 12).sum(:amount) %>
     <div class="mt-5"></div>
     <h2>Expenses Breakdown</h2>
     <p>This year</p>

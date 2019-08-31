@@ -19,6 +19,19 @@ class User < ApplicationRecord
     Account.create(name: 'Cash', kind: 'cash_and_bank', current_balance: 0.0, user: self)
   end
 
+  def lifetime_in_months
+    months = (Time.zone.now.year * 12 + Time.zone.now.month) - (self.created_at.year * 12 + self.created_at.month).to_f
+    months >= 1.0 ? months : 1.0
+  end
+
+  def monthly_average(kind)
+    total = 0.0
+    self.accounts.each do |account|
+      total += account.money_transactions.where(kind: MoneyTransaction.kinds[kind]).sum(:amount)
+    end
+    return total/self.lifetime_in_months 
+  end  
+
   private
 
   def upcase_extra_params
