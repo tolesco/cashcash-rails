@@ -14,7 +14,7 @@ cashcash-rails was developed using the follow frameworks and libraries:
 
 ### Preview
 
-A demo is available on [Heroku](https://cashcash-rails.herokuapp.com/). User: `demo@example.com` and Password: `test123`
+A demo is available on [Heroku](https://cashcash-rails.herokuapp.com/). User: `demo@example.com` and Password: `test123` . Upload attachments in transactions are disabled on this demo.
 
 See the screenshots and mockups in [cashcash-html](https://github.com/tolesco/cashcash-html) repository.
 
