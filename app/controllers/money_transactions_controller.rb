@@ -55,6 +55,6 @@ class MoneyTransactionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def money_transaction_params
-      params.require(:money_transaction).permit(:description, :done_at, :kind, :amount, :notes, :cfdi_folio, :cfdi_issued_by, :cfdi_issued_rfc, :cfdi_payment_method, :data, :account_id, :category_id, :invoice, :cfdi_pdf, :cfdi_xml)
+      params.require(:money_transaction).permit(:description, :done_at, :kind, :amount, :notes, :cfdi_folio, :cfdi_issued_by, :cfdi_issued_rfc, :cfdi_payment_method, :account_id, :category_id, :invoice, :cfdi_pdf, :cfdi_xml)
     end
 end

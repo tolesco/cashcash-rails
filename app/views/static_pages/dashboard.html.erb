@@ -48,6 +48,6 @@
     <div class="mt-5"></div>
     <h2>Expenses Breakdown</h2>
     <p>This year</p>
-    <%= pie_chart MoneyTransaction.group_by_categories(current_user, Time.zone.now.year), suffix: "%" %>            
+    <%= pie_chart MoneyTransaction.categories_and_percentages_to_hash(current_user, Time.zone.now.year), suffix: "%" %>            
   </div>
 </div>

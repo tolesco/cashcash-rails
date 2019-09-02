@@ -5,8 +5,8 @@ class MoneyTransaction < ApplicationRecord
   has_one_attached :cfdi_pdf
   has_one_attached :cfdi_xml
   enum kind: [:deposit, :withdrawal]
-  after_commit   :update_account_balance, on: [:create, :update]
-  after_destroy  :update_account_balance
+  after_save_commit     :update_account_balance
+  after_destroy_commit  :update_account_balance
   validates_presence_of :amount, :kind
 
   def self.find_by_filters(user, search, account, category, date_range)
@@ -105,7 +105,7 @@ class MoneyTransaction < ApplicationRecord
     joins(:account).where('accounts.user_id = ? AND discarded_at IS NULL', user) 
   end
 
-  def self.group_by_categories(user, year)
+  def self.categories_and_percentages_to_hash(user, year)
     categories_and_percentages = {}
     total_year_expense = 0.0  
     user.accounts.each do |account|

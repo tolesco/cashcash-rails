@@ -65,7 +65,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Cashcash-rails gems
 gem 'devise'
-gem 'pundit'
 gem "aws-sdk-s3", require: false
 gem 'chartkick'
 gem 'groupdate'

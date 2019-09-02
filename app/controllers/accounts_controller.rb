@@ -4,9 +4,9 @@ class AccountsController < ApplicationController
   # GET /accounts
   def index
     if params[:archived].present?
-      @accounts = Account.discarded
+      @accounts = current_user.accounts.discarded
     else
-      @accounts = Account.kept
+      @accounts = current_user.accounts.kept
     end
   end
 
@@ -58,6 +58,6 @@ class AccountsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_params
-      params.require(:account).permit(:kind, :name, :initial_balance, :current_balance, :description, :data, :user_id)
+      params.require(:account).permit(:kind, :name, :initial_balance, :current_balance, :description, :user_id)
     end
 end

@@ -3,7 +3,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories
   def index
-    @categories = Category.where(user: current_user)
+    @categories = current_user.categories
   end
 
   # GET /categories/new
@@ -51,6 +51,6 @@ class CategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:associated_transaction_type, :name, :description, :data, :user_id, :immortal)
+      params.require(:category).permit(:associated_transaction_type, :name, :description, :user_id)
     end
 end
