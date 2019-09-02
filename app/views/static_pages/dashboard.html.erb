@@ -1,7 +1,7 @@
 <h1 class="text-brand-primary">Dashboard</h1>
 <p class="text-sm">Manage your money with ease.</p>
 <div class="row">
-  <div class="col">
+  <div class="col-4">
     <h2>Accounts</h2>
     <p>Net income <strong><%= number_to_currency(current_user.current_net_income) %></strong></p>
     <ul class="list-unstyled">
@@ -20,7 +20,7 @@
     </ul>
     <a href="<%= new_category_path %>" class="btn btn-primary">New category</a>            
   </div>
-  <div class="col">
+  <div class="col-8">
     <h2>Averages</h2>
     <p>All time</p>
     <div class="row">

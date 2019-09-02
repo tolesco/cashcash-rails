@@ -5,8 +5,7 @@ class MoneyTransaction < ApplicationRecord
   has_one_attached :cfdi_pdf
   has_one_attached :cfdi_xml
   enum kind: [:deposit, :withdrawal]
-  after_commit          :update_account_balance, on: [:create, :update]
-  after_destroy_commit  :update_account_balance
+  after_commit :update_account_balance, on: [:create, :update, :destroy]
   validates_presence_of :amount, :kind
 
   def self.find_by_filters(user, search, account, category, date_range)
