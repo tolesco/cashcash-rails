@@ -15,11 +15,17 @@ class MoneyTransactionsController < ApplicationController
 
   # GET /money_transactions/new
   def new
-    @money_transaction = MoneyTransaction.new
+    @money_transaction = MoneyTransaction.new(kind: 'deposit')
+    set_accounts
+    set_money_transaction_kinds
+    set_categories
   end
 
   # GET /money_transactions/1/edit
   def edit
+    set_accounts
+    set_money_transaction_kinds
+    set_categories
   end
 
   # POST /money_transactions
@@ -35,7 +41,7 @@ class MoneyTransactionsController < ApplicationController
   # PATCH/PUT /money_transactions/1
   def update    
     if @money_transaction.update(money_transaction_params)
-      redirect_to edit_money_transaction_path(@money_transaction), notice: 'Money transaction was successfully updated.'
+      redirect_to money_transactions_url, notice: 'Money transaction was successfully updated.'
     else
       render :edit
     end
@@ -51,6 +57,18 @@ class MoneyTransactionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_money_transaction
       @money_transaction = MoneyTransaction.find(params[:id])
+    end
+
+    def set_accounts
+      @accounts = current_user.accounts.kept.map{ |a| [a.name, a.id] }
+    end
+
+    def set_money_transaction_kinds
+      @money_transaction_kinds = MoneyTransaction.kinds.map{ |mt| [mt[0].humanize, mt[0]]}
+    end
+
+    def set_categories
+      @categories = Category.by_money_transaction_kind(current_user, @money_transaction.kind).map{ |c| [c.name, c.id] }
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

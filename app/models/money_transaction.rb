@@ -5,7 +5,7 @@ class MoneyTransaction < ApplicationRecord
   has_one_attached :cfdi_pdf
   has_one_attached :cfdi_xml
   enum kind: [:deposit, :withdrawal]
-  after_save_commit     :update_account_balance
+  after_commit          :update_account_balance, on: [:create, :update]
   after_destroy_commit  :update_account_balance
   validates_presence_of :amount, :kind
 
@@ -118,6 +118,17 @@ class MoneyTransaction < ApplicationRecord
     return categories_and_percentages
   end
 
+  def self.to_csv(records)
+    require 'csv'
+    money_transactions = records.order('done_at asc')
+    CSV.generate(headers: true, encoding: 'utf-8') do |csv|
+      csv << ['date', 'description', 'amount', 'type', 'category']
+      money_transactions.each do |mt|
+        csv << [mt.done_at, mt.description, mt.amount, mt.kind, mt.category.name]
+      end
+    end    
+  end
+
   def update_account_balance
     accounts = self.account.user.accounts
     accounts.each do |account|
@@ -132,16 +143,5 @@ class MoneyTransaction < ApplicationRecord
       end
       account.update(current_balance: new_account_balance)
     end
-  end
-
-  def self.to_csv(records)
-    require 'csv'
-    money_transactions = records.order('done_at asc')
-    CSV.generate(headers: true, encoding: 'utf-8') do |csv|
-      csv << ['date', 'description', 'amount', 'type', 'category']
-      money_transactions.each do |mt|
-        csv << [mt.done_at, mt.description, mt.amount, mt.kind, mt.category.name]
-      end
-    end    
   end  
 end

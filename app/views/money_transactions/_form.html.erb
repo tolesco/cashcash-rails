@@ -28,7 +28,7 @@
                   <div class="form-group col">
                     <%= form.label :account_id, 'Account' %>
                     <%= form.select :account_id, 
-                        options_for_select(current_user.accounts.kept.map{ |a| [a.name, a.id] }, money_transaction.persisted? ? money_transaction.account.id : '' ), 
+                        options_for_select(@accounts, money_transaction.persisted? ? money_transaction.account.id : '' ), 
                         {}, 
                         class: 'custom-select' %>
                   </div>                
@@ -42,7 +42,7 @@
                 <div class="form-row">
                   <div class="form-group col">
                     <%= form.label :kind, 'Deposit or Withdrawal' %>
-                    <%= form.select :kind, options_for_select(MoneyTransaction.kinds.map{ |mt| [mt[0].humanize, mt[0]]}, money_transaction.kind),
+                    <%= form.select :kind, options_for_select(@money_transaction_kinds, money_transaction.kind),
                         {}, class: 'custom-select' %>
                   </div>                
                   <div class="form-group col">
@@ -54,7 +54,7 @@
                   <div class="form-group col">
                     <%= form.label :category_id, 'Category' %>
                     <%= form.select :category_id, 
-                        options_for_select(current_user.categories.map{ |c| [c.name, c.id] }, money_transaction.persisted? ? money_transaction.category.id : ''),
+                        options_for_select(@categories, money_transaction.persisted? ? money_transaction.category.id : ''),
                         {}, class: 'custom-select' %>
                   </div>                
                   <div class="form-group col">

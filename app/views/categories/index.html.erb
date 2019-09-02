@@ -2,7 +2,7 @@
 <p class="text-sm">Lorem ipsum dolor sit amet...</p>
 <%= link_to 'New category', new_category_path, class: 'btn btn-primary'  %>
 <p class="text-sm text-gray mt-3">
-  Categories <strong><%= Category.all.count %></strong>
+  Categories (<strong><%= @categories.count %></strong>)
 </p>
 <table class="table table-sm">
   <thead>

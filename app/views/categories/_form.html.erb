@@ -22,7 +22,7 @@
                 <div class="form-group col">
                   <%= form.label :associated_transaction_type, 'Associated Transaction Type' %>
                   <%= form.select :associated_transaction_type,
-                      options_for_select(Category.associated_transaction_types.map{ |tt| [tt[0].humanize, tt[0]] }, category.associated_transaction_type), {}, class: 'custom-select' %>
+                      options_for_select(@associated_transaction_types, category.associated_transaction_type), {}, class: 'custom-select' %>
                 </div>                  
               </div>
               <div class="form-group">

@@ -13,10 +13,12 @@ class AccountsController < ApplicationController
   # GET /accounts/new
   def new
     @account = Account.new(user: current_user)
+    set_account_kinds
   end
 
   # GET /accounts/1/edit
   def edit
+    set_account_kinds
   end
 
   # POST /accounts
@@ -54,6 +56,10 @@ class AccountsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_account
       @account = Account.find(params[:id])
+    end
+
+    def set_account_kinds
+      @account_kinds = Account.kinds.map{ |k| [k[0].humanize, k[0]] }
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

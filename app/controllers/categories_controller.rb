@@ -9,10 +9,12 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   def new
     @category = Category.new(user: current_user)
+    set_associated_transaction_types
   end
 
   # GET /categories/1/edit
   def edit
+    set_associated_transaction_types
   end
 
   # POST /categories
@@ -47,6 +49,10 @@ class CategoriesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_category
       @category = Category.find(params[:id])
+    end
+
+    def set_associated_transaction_types
+      @associated_transaction_types = Category.associated_transaction_types.map{ |tt| [tt[0].humanize, tt[0]] }
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

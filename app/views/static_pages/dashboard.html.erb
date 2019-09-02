@@ -5,7 +5,7 @@
     <h2>Accounts</h2>
     <p>Net income <strong><%= number_to_currency(current_user.current_net_income) %></strong></p>
     <ul class="list-unstyled">
-      <% current_user.accounts.kept.each do |account| %>
+      <% @accounts.each do |account| %>
         <li><%= link_to "#{account.name} #{number_to_currency(account.current_balance)}", money_transactions_path(account: account) %></li>
       <% end %>
     </ul>
@@ -14,7 +14,7 @@
     <h2>Categories</h2>
     <p>Most used</p>
     <ul class="list-unstyled">
-      <% current_user.categories.each do |category| %>
+      <% @categories.each do |category| %>
         <li><%= link_to category.name, edit_category_path(category) %></li>
       <% end %>
     </ul>
@@ -44,10 +44,10 @@
     <div class="mt-5"></div>
     <h2>Income & Expenses</h2>
     <p>Last 12 months</p>
-    <%= column_chart MoneyTransaction.group(:kind).group_by_month(:done_at, last: 12).sum(:amount) %>
+    <%= column_chart @income_and_expenses_data %>
     <div class="mt-5"></div>
     <h2>Expenses Breakdown</h2>
     <p>This year</p>
-    <%= pie_chart MoneyTransaction.categories_and_percentages_to_hash(current_user, Time.zone.now.year), suffix: "%" %>            
+    <%= pie_chart @expenses_breakdown_data, suffix: "%" %>            
   </div>
 </div>

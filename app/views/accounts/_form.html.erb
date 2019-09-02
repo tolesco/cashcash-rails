@@ -17,7 +17,7 @@
         <div class="form-group col">
           <%= form.label :kind, 'Account Type' %>
           <%= form.select :kind,
-              options_for_select(Account.kinds.map{ |k| [k[0].humanize, k[0]] }, account.kind), 
+              options_for_select(@account_kinds, account.kind), 
               {}, 
               class: 'custom-select' %>
         </div>                
@@ -54,7 +54,6 @@
   <div class="card-footer text-right">
     <%= form.hidden_field :user_id %>
     <% if account.persisted? %>
-      <!-- <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a> -->
       <%= link_to "<i class='fas fa-archive'></i>".html_safe,
           account,
           class: 'btn btn-danger',
