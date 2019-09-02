@@ -14,6 +14,8 @@ cashcash-rails was developed using the follow frameworks and libraries:
 
 ### Preview
 
+A demo is available on [Heroku](https://cashcash-rails.herokuapp.com/). User: `demo@example.com` , Pass: `test123`
+
 See the screenshots and mockups in [cashcash-html](https://github.com/tolesco/cashcash-html) repository.
 
 ## Getting Started
@@ -31,6 +33,7 @@ Once you have Ruby on Rails 5.2.3 properly installed and configured you can make
 ```
 git clone https://github.com/tolesco/cashcash-rails.git
 cd cashcash-rails
+bundle install
 rails db:create
 rails db:migrate
 rails s
