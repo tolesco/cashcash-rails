@@ -1,0 +1,14 @@
+// Get the select item
+var select = document.getElementById("money_transaction_category_id");
+// Remove current options for select
+while (select.firstChild) {
+  select.removeChild(select.firstChild);
+}
+// Set new options
+var option;
+<% @categories.each do |category| %>
+  option = document.createElement('option');
+  option.value = "<%= j category.id %>";
+  option.text  = "<%= j category.name %>";
+  select.add(option);
+<% end %>

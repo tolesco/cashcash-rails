@@ -127,3 +127,21 @@
           </div>
         </div>
 <% end %>
+
+<script>
+  $('#money_transaction_kind').on('change', function(){
+    var associated_transaction_type = $(this).val();
+    Rails.ajax({
+      url: '/categories',
+      type: 'get',
+      data: 'associated_transaction_type='+associated_transaction_type,
+      dataType: 'script',
+      success: function(){
+        console.log('Categories loaded - OK - Rendering index.js.erb');
+      },
+      error: function(){
+        alert('An error ocurred. Please try again.');
+      }
+    })
+  });
+</script>

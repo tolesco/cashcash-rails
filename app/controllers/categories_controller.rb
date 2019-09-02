@@ -3,7 +3,16 @@ class CategoriesController < ApplicationController
 
   # GET /categories
   def index
-    @categories = current_user.categories
+    if params[:associated_transaction_type].present?
+      kind = params[:associated_transaction_type].downcase
+      @categories = Category.by_money_transaction_kind(current_user, kind)
+    else
+      @categories = current_user.categories
+    end
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /categories/new
