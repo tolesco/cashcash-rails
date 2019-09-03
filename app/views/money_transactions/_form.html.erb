@@ -35,7 +35,8 @@
                   <div class="form-group col">
                     <%= form.label :done_at, 'Date' %>
                     <%= form.text_field :done_at,
-                        class: 'form-control single-date-picker-here', 
+                        class: 'form-control single-date-picker-here',
+                        required: true, 
                         value: money_transaction.persisted? ? money_transaction.done_at.strftime("%d/%m/%Y") : '' %>
                   </div>                  
                 </div>
