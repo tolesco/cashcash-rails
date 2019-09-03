@@ -37,7 +37,7 @@
   <tbody>
     <% @money_transactions.each do |mt| %>
       <tr>
-        <td><%= mt.done_at.strftime("%d/%m/%Y") %></td>
+        <td><%= mt.done_at.present? ? mt.done_at.strftime("%d/%m/%Y") : ''  %></td>
         <td><%= mt.description %></td>
         <td>
           <span class="text-<%= mt.deposit? ? 'success' : 'normal' %>">
